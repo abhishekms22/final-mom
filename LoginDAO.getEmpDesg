@@ -1,0 +1,21 @@
+public static String getEmpdesg(String email, String pass){
+		String desg = null;
+		try {
+			Connection con = EmployeeDAO.getConnection();
+			PreparedStatement ps = con.prepareStatement("select emp_desg from employees where emp_email=? and emp_pass=?");
+			
+			ps.setString(1, email);
+			ps.setString(2, pass);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				desg = rs.getString(1);
+			}
+		}
+		catch(Exception e){
+				e.printStackTrace();
+			}
+		
+		return desg;
+		
+	}
