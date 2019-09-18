@@ -1,0 +1,21 @@
+public static List<Departments> getAllDepartments() {
+		List<Departments> list = new ArrayList<Departments>();
+		try {
+			Connection con = EmployeeDAO.getConnection();
+
+			PreparedStatement ps = con.prepareStatement("select * from departments");
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Departments e = new Departments();
+				e.setDept_id(rs.getInt(1));
+				e.setDept_name(rs.getString(2));
+				list.add(e);
+			}
+			con.close();
+
+		} catch (Exception E) {
+			System.out.println(E);
+		}
+		return list;
+	}
