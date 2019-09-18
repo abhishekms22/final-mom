@@ -1,0 +1,29 @@
+public static int insertEmployee(Employees e) {
+		int status = 0;
+
+		try {
+			Connection con = EmployeeDAO.getConnection();
+			PreparedStatement ps = con.prepareStatement("insert into employees values(employees_seq.NEXTVAL,?,?,?,?,?,?,?)");
+
+			ps.setString(1, e.getEmp_name());
+			ps.setString(2, e.getEmp_email());
+			ps.setString(3, e.getEmp_pass());
+			ps.setString(4, e.getEmp_desgn());
+			ps.setInt(5, e.getDept_id());
+			ps.setInt(6, e.getEmp_status());
+			String date = e.getEmp_startdate();
+			SimpleDateFormat sdf= new SimpleDateFormat("dd-MM-yyyy");
+			java.util.Date sd = sdf.parse(date);
+			java.sql.Date sqdob = new java.sql.Date(sd.getTime());
+			
+			ps.setDate(7, sqdob);
+
+			status = ps.executeUpdate();
+			con.close();
+
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+
+		return status;
+	}
