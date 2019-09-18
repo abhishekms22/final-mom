@@ -1,0 +1,28 @@
+public static Employees getEmployeeById(long id) {
+		Employees c = new Employees();
+
+		try {
+			Connection con = EmployeeDAO.getConnection();
+			PreparedStatement ps = con.prepareStatement("select * from employees where emp_id=?");
+
+			ps.setLong(1, id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+
+				c.setEmp_id(rs.getLong(1));
+				c.setEmp_name(rs.getString(2));
+				c.setEmp_email(rs.getString(3));
+				c.setEmp_pass(rs.getString(4));
+				c.setEmp_desgn(rs.getString(5));
+				c.setDept_id(rs.getInt(6));
+				c.setEmp_status(rs.getInt(7));
+				c.setEmp_startdate(rs.getString(8));
+			}
+			con.close();
+
+		} catch (Exception E) {
+			System.out.println(E);
+
+		}
+		return c;
+	}
