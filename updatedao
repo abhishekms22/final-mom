@@ -1,0 +1,25 @@
+public static int updateEmployee(Employees empObj){  
+        int status=0;  
+        try{  
+            Connection con=EmployeeDAO.getConnection();  
+            PreparedStatement ps=con.prepareStatement(  
+      "update employees set emp_name=?, emp_pass=?,emp_email=?,emp_desg=?, Dept_id=? where emp_id=?");  
+            ps.setString(1, empObj.getEmp_name());
+			ps.setString(3, empObj.getEmp_email());
+			ps.setString(2, empObj.getEmp_pass());
+			ps.setString(4, empObj.getEmp_desgn());
+			ps.setInt(5, empObj.getDept_id());
+			
+			ps.setLong(6, empObj.getEmp_id());
+			System.out.println("employee");
+			System.out.println(empObj.getEmp_name());
+			System.out.println(empObj.getEmp_id());
+			
+ 
+              
+            status=ps.executeUpdate();  
+            con.close();  
+        }catch(Exception ex){ex.printStackTrace();}  
+          
+        return status;  
+    } 
